@@ -1,0 +1,241 @@
+/* ── Auth Pages (Login & Signup) ─────────────────────────── */
+
+.auth-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 80px);
+  padding: 40px 20px;
+}
+
+.auth-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 40px;
+  width: 100%;
+  max-width: 440px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+  animation: authSlideUp 0.5s ease-out;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-title {
+  font-size: 2rem;
+  color: #ff6f00;
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+
+.auth-subtitle {
+  color: #777;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.auth-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: 0.3px;
+}
+
+.auth-field input {
+  padding: 13px 16px;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 111, 0, 0.2);
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  font-size: 0.95rem;
+  color: #333;
+  outline: none;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.auth-field input::placeholder {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.auth-field input:focus {
+  border-color: #ff6f00;
+  box-shadow: 0 0 20px rgba(255, 111, 0, 0.15);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Submit Button */
+.auth-btn {
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #ff6f00, #ff8f00);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(255, 111, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.auth-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 111, 0, 0.4);
+}
+
+.auth-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Spinner */
+.auth-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: authSpin 0.6s linear infinite;
+}
+
+/* Error */
+.auth-error {
+  background: rgba(244, 67, 54, 0.12);
+  color: #d32f2f;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid rgba(244, 67, 54, 0.25);
+  text-align: center;
+}
+
+/* Footer text */
+.auth-footer-text {
+  text-align: center;
+  margin-top: 24px;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.auth-link {
+  color: #ff6f00;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.auth-link:hover {
+  color: #e65100;
+  text-decoration: underline;
+}
+
+/* ── Dark Mode ──────────────────────────────────────────── */
+
+.dark .auth-card {
+  background: rgba(30, 30, 50, 0.7);
+  border-color: rgba(255, 183, 77, 0.15);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.dark .auth-title {
+  color: #ffb74d;
+}
+
+.dark .auth-subtitle {
+  color: #999;
+}
+
+.dark .auth-field label {
+  color: #bbb;
+}
+
+.dark .auth-field input {
+  background: rgba(26, 26, 40, 0.7);
+  border-color: rgba(255, 183, 77, 0.2);
+  color: #f0f0f0;
+}
+
+.dark .auth-field input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.dark .auth-field input:focus {
+  border-color: #ffb74d;
+  box-shadow: 0 0 20px rgba(255, 183, 77, 0.15);
+  background: rgba(26, 26, 40, 0.9);
+}
+
+.dark .auth-error {
+  background: rgba(244, 67, 54, 0.15);
+  border-color: rgba(244, 67, 54, 0.3);
+}
+
+.dark .auth-footer-text {
+  color: #999;
+}
+
+.dark .auth-link {
+  color: #ffb74d;
+}
+
+.dark .auth-link:hover {
+  color: #ffa726;
+}
+
+/* ── Animations ─────────────────────────────────────────── */
+
+@keyframes authSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes authSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 28px 20px;
+    border-radius: 16px;
+  }
+
+  .auth-title {
+    font-size: 1.6rem;
+  }
+}

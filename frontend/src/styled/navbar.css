@@ -1,0 +1,205 @@
+/* ── Premium Navbar Styling ───────────────────────────── */
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-logo {
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ff6f00, #ffb74d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+  letter-spacing: -0.5px;
+  transition: transform 0.3s ease;
+}
+
+.nav-logo:hover {
+  transform: scale(1.05);
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  font-size: 0.95rem;
+  position: relative;
+  transition: color 0.3s ease;
+  padding: 5px 0;
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #ff6f00;
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.nav-links a:hover {
+  color: #ff6f00;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 111, 0, 0.1);
+  padding: 5px 15px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 111, 0, 0.2);
+}
+
+.nav-user-link {
+  text-decoration: none;
+}
+
+.nav-username {
+  color: #ff6f00;
+  font-weight: 700;
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nav-user-link:hover .nav-username {
+  transform: scale(1.05);
+}
+
+.nav-logout {
+  background: #ff6f00 !important;
+  color: white !important;
+  padding: 8px 18px !important;
+  border-radius: 50px !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  border: none !important;
+  cursor: pointer;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 4px 15px rgba(255, 111, 0, 0.3) !important;
+}
+
+.nav-logout:hover {
+  background: #e65100 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 20px rgba(255, 111, 0, 0.4) !important;
+}
+
+.nav-login-link {
+  text-decoration: none;
+  background: linear-gradient(135deg, #ff6f00, #ff8f00);
+  color: white;
+  padding: 10px 25px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 15px rgba(255, 111, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.nav-login-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 111, 0, 0.4);
+  background: linear-gradient(135deg, #e65100, #ff6f00);
+}
+
+.theme-toggle {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  width: 40px;
+  height: 40px;
+  border-radius: 50% !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem !important;
+  transition: all 0.3s ease !important;
+  box-shadow: none !important;
+}
+
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  transform: rotate(30deg);
+}
+
+/* ── Dark Mode Variants ──────────────────────────────── */
+
+.dark .nav {
+  background: rgba(15, 15, 25, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dark .nav-links a {
+  color: #e0e0e0;
+}
+
+.dark .nav-links a:hover {
+  color: #ffb74d;
+}
+
+.dark .nav-user {
+  background: rgba(255, 183, 77, 0.05);
+  border-color: rgba(255, 183, 77, 0.1);
+}
+
+.dark .nav-username {
+  color: #ffb74d;
+}
+
+.dark .theme-toggle {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+
+@media (max-width: 992px) {
+  .nav {
+    padding: 0 3%;
+  }
+  .nav-links {
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none; /* In a real app we'd add a mobile menu */
+  }
+}

@@ -1,0 +1,140 @@
+.meal-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 15px;
+  padding: 15px;
+  text-align: left;
+
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+}
+
+.card img {
+  width: 100%;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.card h3 {
+  margin: 10px 0 5px;
+}
+
+.category {
+  color: #ff6f00;
+  font-weight: bold;
+}
+.card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+button:active {
+  transform: scale(0.95);
+}
+
+/* Buttons */
+.buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.yt {
+  background: #ff0000;
+}
+
+/* Details */
+.details {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.details ul {
+  padding-left: 20px;
+}
+
+/* Skeleton */
+.skeleton-card {
+  height: 260px;
+  border-radius: 15px;
+  background: linear-gradient(
+    90deg,
+    #eee 25%,
+    #f5f5f5 50%,
+    #eee 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ── Card Image Wrapper + Heart Overlay ──────────────── */
+
+.card-img-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.card-img-wrapper img {
+  width: 100%;
+  border-radius: 12px;
+  display: block;
+}
+
+.card-heart {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50% !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  border: none !important;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15) !important;
+  padding: 0 !important;
+  z-index: 2;
+}
+
+.card:hover .card-heart {
+  opacity: 1;
+}
+
+.card-heart.hearted {
+  opacity: 1;
+}
+
+.card-heart:hover {
+  transform: scale(1.2) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark .card-heart {
+  background: rgba(30, 30, 50, 0.85) !important;
+}

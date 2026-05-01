@@ -1,0 +1,331 @@
+/* ── Dashboard / Analytics Page ──────────────────────────── */
+
+.dashboard-page {
+  padding: 40px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+}
+
+.dashboard-page h1 {
+  color: #ff6f00;
+  font-size: 2.2rem;
+  margin-bottom: 8px;
+  animation: slideDown 0.5s ease-out;
+}
+
+.dashboard-subtitle {
+  color: #777;
+  font-size: 1rem;
+  margin-bottom: 35px;
+}
+
+.dashboard-subtitle strong {
+  color: #ff6f00;
+}
+
+.dashboard-error {
+  background: rgba(244, 67, 54, 0.15);
+  color: #d32f2f;
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+/* Section Card */
+.dash-section {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(15px);
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.06);
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.dash-section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.dash-icon {
+  font-size: 1.5rem;
+}
+
+.dash-section-header h2 {
+  font-size: 1.15rem;
+  color: #333;
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Empty State */
+.dash-empty {
+  text-align: center;
+  padding: 30px 15px;
+  color: #999;
+}
+
+.dash-empty p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Cooked Meals List */
+.dash-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dash-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease;
+}
+
+.dash-item:hover {
+  background: rgba(255, 111, 0, 0.06);
+}
+
+.dash-rank {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #ff6f00;
+  min-width: 28px;
+  text-align: center;
+}
+
+.dash-item-img img {
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.dash-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.dash-item-info h4 {
+  margin: 0 0 3px;
+  font-size: 0.92rem;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dash-item-meta {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.dash-item-meta span {
+  font-size: 0.7rem;
+  color: #999;
+  background: rgba(0,0,0,0.04);
+  padding: 1px 7px;
+  border-radius: 10px;
+}
+
+/* Progress Bar */
+.progress-bar {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff6f00, #ff8f00);
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+
+.search-fill {
+  background: linear-gradient(90deg, #4a7dc1, #64b5f6);
+}
+
+/* Count Badge */
+.dash-count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 50px;
+}
+
+.count-number {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ff6f00;
+}
+
+.count-label {
+  font-size: 0.65rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Searched Ingredients */
+.dash-tags-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dash-tag-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.2s ease;
+}
+
+.dash-tag-item:hover {
+  background: rgba(74, 125, 193, 0.06);
+}
+
+.dash-tag-info {
+  flex: 1;
+}
+
+.dash-tag-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  text-transform: capitalize;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.dash-tag-item .count-number {
+  color: #4a7dc1;
+}
+
+/* Skeleton */
+.dashboard-skeleton {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.skeleton-section {
+  height: 300px;
+  border-radius: 16px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.5) 25%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.5) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* ── Dark Mode ──────────────────────────────────────────── */
+
+.dark .dashboard-page h1 {
+  color: #ffb74d;
+}
+
+.dark .dashboard-subtitle {
+  color: #999;
+}
+
+.dark .dashboard-subtitle strong {
+  color: #ffb74d;
+}
+
+.dark .dash-section {
+  background: rgba(30, 30, 50, 0.6);
+  border-color: rgba(255, 183, 77, 0.15);
+}
+
+.dark .dash-section-header h2 {
+  color: #f0f0f0;
+}
+
+.dark .dash-item {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.dark .dash-item:hover {
+  background: rgba(255, 183, 77, 0.06);
+}
+
+.dark .dash-item-info h4 {
+  color: #f0f0f0;
+}
+
+.dark .dash-item-meta span {
+  background: rgba(255, 255, 255, 0.06);
+  color: #888;
+}
+
+.dark .progress-bar {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dark .dash-tag-name {
+  color: #f0f0f0;
+}
+
+.dark .dash-tag-item {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.dark .count-number {
+  color: #ffb74d;
+}
+
+.dark .dash-tag-item .count-number {
+  color: #64b5f6;
+}
+
+.dark .skeleton-section {
+  background: linear-gradient(90deg, rgba(30,30,50,0.5) 25%, rgba(40,40,60,0.7) 50%, rgba(30,30,50,0.5) 75%);
+  background-size: 200% 100%;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-skeleton {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .dash-item-img img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .dash-count {
+    min-width: 40px;
+  }
+
+  .count-number {
+    font-size: 1.1rem;
+  }
+}
