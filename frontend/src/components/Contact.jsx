@@ -1,134 +1,167 @@
-import { useState } from "react";
-import "../styled/contact.css";
+import React, { useState } from "react";
+import axios from "axios";
 
 const API_URL = "https://mealify-backend-oke2.onrender.com/api";
 
-export default function Contact() {
+function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
   });
 
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
-  const [error, setError] = useState("");
-
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.value,
-    }));
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("");
-    setError("");
-
-    const { name, email, message } = formData;
-
-    if (!name.trim() || !email.trim() || !message.trim()) {
-      setError("Please fill in all fields.");
-      return;
-    }
-
-    setLoading(true);
 
     try {
-      const res = await fetch(`${API_URL}/contact`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name.trim(),
-          email: email.trim(),
-          message: message.trim(),
-        }),
-      });
+      const res = await axios.post(`${API_URL}/contact`, formData);
 
-      const contentType = res.headers.get("content-type");
+      alert(res.data.message);
 
-      let data;
-      if (contentType && contentType.includes("application/json")) {
-        data = await res.json();
-      } else {
-        const text = await res.text();
-        throw new Error(`Server returned non-JSON response: ${text}`);
-      }
-
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to send message.");
-      }
-
-      setStatus(data.message || "Message sent successfully!");
       setFormData({
         name: "",
         email: "",
         message: "",
       });
     } catch (err) {
-      console.error("Contact form error:", err);
-      setError(err.message || "Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
+      alert(err.response?.data?.message || "Something went wrong");
     }
   };
 
   return (
-    <div className="contact-page">
-      <div className="contact-card">
-        <h1 className="contact-title">Contact Us</h1>
-        <p className="contact-subtitle">
-          Have a question or feedback? Send us a message.
-        </p>
+    <>
+      <style>{`
+        *{
+          box-sizing:border-box;
+        }
 
-        <form onSubmit={handleSubmit} className="contact-form">
-          {status && <div className="contact-success">{status}</div>}
-          {error && <div className="contact-error">{error}</div>}
+        body{
+          margin:0;
+          font-family:Arial,Helvetica,sans-serif;
+          background:#f5f5f5;
+        }
 
-          <div className="contact-field">
-            <label htmlFor="name">Name</label>
+        .contact-container{
+          width:100%;
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          padding:60px 20px;
+        }
+
+        .contact-card{
+          width:100%;
+          max-width:650px;
+          background:#fff;
+          padding:35px;
+          border-radius:12px;
+          box-shadow:0 8px 25px rgba(0,0,0,.1);
+        }
+
+        .contact-card h2{
+          text-align:center;
+          margin-bottom:25px;
+          color:#222;
+        }
+
+        .contact-form{
+          display:flex;
+          flex-direction:column;
+          gap:18px;
+        }
+
+        .contact-form input,
+        .contact-form textarea{
+          width:100%;
+          padding:14px;
+          border:1px solid #ccc;
+          border-radius:8px;
+          font-size:16px;
+          outline:none;
+          transition:.3s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus{
+          border-color:#ff4d4d;
+          box-shadow:0 0 5px rgba(255,77,77,.3);
+        }
+
+        .contact-form textarea{
+          resize:none;
+        }
+
+        .contact-form button{
+          background:#ff4d4d;
+          color:white;
+          border:none;
+          padding:15px;
+          border-radius:8px;
+          font-size:17px;
+          cursor:pointer;
+          transition:.3s;
+        }
+
+        .contact-form button:hover{
+          background:#e63946;
+        }
+
+        @media(max-width:768px){
+          .contact-card{
+            padding:25px;
+          }
+
+          .contact-card h2{
+            font-size:24px;
+          }
+        }
+      `}</style>
+
+      <div className="contact-container">
+        <div className="contact-card">
+          <h2>Contact Us</h2>
+
+          <form className="contact-form" onSubmit={handleSubmit}>
             <input
-              id="name"
-              name="name"
               type="text"
-              placeholder="Enter your name"
+              name="name"
+              placeholder="Your Name"
               value={formData.name}
               onChange={handleChange}
+              required
             />
-          </div>
 
-          <div className="contact-field">
-            <label htmlFor="email">Email</label>
             <input
-              id="email"
-              name="email"
               type="email"
-              placeholder="Enter your email"
+              name="email"
+              placeholder="Your Email"
               value={formData.email}
               onChange={handleChange}
+              required
             />
-          </div>
 
-          <div className="contact-field">
-            <label htmlFor="message">Message</label>
             <textarea
-              id="message"
               name="message"
-              rows="5"
-              placeholder="Write your message here..."
+              rows="6"
+              placeholder="Write your message..."
               value={formData.message}
               onChange={handleChange}
-            />
-          </div>
+              required
+            ></textarea>
 
-          <button type="submit" className="contact-btn" disabled={loading}>
-            {loading ? "Sending..." : "Send Message"}
-          </button>
-        </form>
+            <button type="submit">Send Message</button>
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
+
+export default Contact;
