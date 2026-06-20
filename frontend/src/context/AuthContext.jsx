@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [loading, setLoading] = useState(true);
 
-  // On mount, verify stored token
+  // Check token when app loads
   useEffect(() => {
     if (token) {
       fetchUser();
@@ -21,7 +21,9 @@ export const AuthProvider = ({ children }) => {
   const fetchUser = async () => {
     try {
       const res = await fetch(`${API_URL}/auth/me`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       const contentType = res.headers.get("content-type");
@@ -32,8 +34,8 @@ export const AuthProvider = ({ children }) => {
       } else {
         logout();
       }
-    } catch (error) {
-      console.error("Fetch user error:", error);
+    } catch (err) {
+      console.error("Fetch user error:", err);
       logout();
     } finally {
       setLoading(false);
@@ -43,7 +45,9 @@ export const AuthProvider = ({ children }) => {
   const signup = async (name, email, password) => {
     const res = await fetch(`${API_URL}/auth/signup`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ name, email, password }),
     });
 
@@ -58,19 +62,22 @@ export const AuthProvider = ({ children }) => {
     }
 
     if (!res.ok) {
-      throw new Error(data.error || "Signup failed");
+      throw new Error(data.details || data.error || "Signup failed");
     }
 
     setToken(data.token);
     setUser(data.user);
     localStorage.setItem("token", data.token);
+
     return data;
   };
 
   const login = async (email, password) => {
     const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ email, password }),
     });
 
@@ -85,12 +92,13 @@ export const AuthProvider = ({ children }) => {
     }
 
     if (!res.ok) {
-      throw new Error(data.error || "Login failed");
+      throw new Error(data.details || data.error || "Login failed");
     }
 
     setToken(data.token);
     setUser(data.user);
     localStorage.setItem("token", data.token);
+
     return data;
   };
 
@@ -100,7 +108,6 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
   };
 
-  // Helper for authenticated API calls
   const authFetch = async (url, options = {}) => {
     return fetch(`${API_URL}${url}`, {
       ...options,
