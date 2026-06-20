@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 
 export const AuthContext = createContext();
 
-const API_URL ="https://mealify-backend-oke2.onrender.com";
+const API_URL = "https://mealify-backend-oke2.onrender.com/api";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -23,14 +23,17 @@ export const AuthProvider = ({ children }) => {
       const res = await fetch(`${API_URL}/auth/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (res.ok) {
+
+      const contentType = res.headers.get("content-type");
+
+      if (res.ok && contentType && contentType.includes("application/json")) {
         const data = await res.json();
         setUser(data);
       } else {
-        // Token invalid
         logout();
       }
-    } catch {
+    } catch (error) {
+      console.error("Fetch user error:", error);
       logout();
     } finally {
       setLoading(false);
@@ -44,7 +47,15 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify({ name, email, password }),
     });
 
-    const data = await res.json();
+    const contentType = res.headers.get("content-type");
+
+    let data;
+    if (contentType && contentType.includes("application/json")) {
+      data = await res.json();
+    } else {
+      const text = await res.text();
+      throw new Error(`Server returned non-JSON response: ${text}`);
+    }
 
     if (!res.ok) {
       throw new Error(data.error || "Signup failed");
@@ -63,7 +74,15 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify({ email, password }),
     });
 
-    const data = await res.json();
+    const contentType = res.headers.get("content-type");
+
+    let data;
+    if (contentType && contentType.includes("application/json")) {
+      data = await res.json();
+    } else {
+      const text = await res.text();
+      throw new Error(`Server returned non-JSON response: ${text}`);
+    }
 
     if (!res.ok) {
       throw new Error(data.error || "Login failed");
