@@ -1,31 +1,33 @@
 import { Router } from "express";
-import Contact from "../models/Contact.js";
 
 const router = Router();
 
-// POST /api/contact — submit a contact form
+// POST /api/contact
 router.post("/", async (req, res) => {
   try {
-    const { name, email, subject, message } = req.body;
+    const { name, email, message } = req.body;
 
-    if (!name || !email || !subject || !message) {
-      return res.status(400).json({ error: "All fields are required." });
+    if (!name || !email || !message) {
+      return res.status(400).json({
+        error: "All fields are required.",
+      });
     }
 
-    const submission = await Contact.create({
-      name,
-      email,
-      subject,
-      message,
-    });
+    // For now, just log the message in backend console
+    console.log("📩 New Contact Message:");
+    console.log("Name:", name);
+    console.log("Email:", email);
+    console.log("Message:", message);
 
-    res.status(201).json({
-      message: "Thank you! Your message has been received.",
-      submission,
+    return res.status(200).json({
+      message: "Your message has been sent successfully!",
     });
   } catch (err) {
-    console.error("Contact submission error:", err);
-    res.status(500).json({ error: "Server error." });
+    console.error("Contact route error:", err);
+    return res.status(500).json({
+      error: "Server error. Please try again.",
+      details: err.message,
+    });
   }
 });
 
