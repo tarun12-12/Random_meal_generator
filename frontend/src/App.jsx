@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./context/ThemeContext";
 import { ImageProvider } from "./context/ImageContext";
 import { AuthProvider } from "./context/AuthContext";
@@ -19,7 +19,7 @@ export default function App() {
     <ThemeProvider>
       <AuthProvider>
         <ImageProvider>
-          <BrowserRouter>
+          <HashRouter>
             <div className="app-wrapper">
               <Navbar />
               <main style={{ flex: 1 }}>
@@ -36,7 +36,7 @@ export default function App() {
               </main>
               <Footer />
             </div>
-          </BrowserRouter>
+          </HashRouter>
         </ImageProvider>
       </AuthProvider>
     </ThemeProvider>
