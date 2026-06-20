@@ -26,7 +26,7 @@ app.get("/api/health", (req, res) => {
 
 // Connect to MongoDB and start server
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URL)
   .then(() => {
     console.log("✅ Connected to MongoDB Atlas");
     app.listen(PORT, () => {
