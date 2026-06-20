@@ -11,14 +11,22 @@ function hashPassword(password) {
   return crypto.createHash("sha256").update(password).digest("hex");
 }
 
-// Generate JWT token
+// Generate token
 function generateToken(userId) {
-  return jwt.sign({ userId: userId.toString() }, process.env.JWT_SECRET, {
-    expiresIn: "7d",
-  });
+  if (!process.env.JWT_SECRET) {
+    throw new Error("JWT_SECRET is missing in environment variables");
+  }
+
+  return jwt.sign(
+    { userId: userId.toString() },
+    process.env.JWT_SECRET,
+    { expiresIn: "7d" }
+  );
 }
 
-// POST /api/auth/signup
+// =======================
+// SIGNUP
+// =======================
 router.post("/signup", async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -70,7 +78,9 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// POST /api/auth/login
+// =======================
+// LOGIN
+// =======================
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -118,7 +128,9 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// GET /api/auth/me
+// =======================
+// GET CURRENT USER
+// =======================
 router.get("/me", auth, async (req, res) => {
   try {
     const user = await User.findById(req.userId).select("-password");
