@@ -6,14 +6,16 @@ import auth from "../middleware/auth.js";
 
 const router = Router();
 
-// Hash password using Node's built-in crypto (no bcrypt)
+// Hash password
 function hashPassword(password) {
   return crypto.createHash("sha256").update(password).digest("hex");
 }
 
 // Generate JWT token
 function generateToken(userId) {
-  return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "7d" });
+  return jwt.sign({ userId: userId.toString() }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
 }
 
 // POST /api/auth/signup
@@ -31,8 +33,10 @@ router.post("/signup", async (req, res) => {
         .json({ error: "Password must be at least 6 characters." });
     }
 
-    // Check if user already exists
-    const existingUser = await User.findOne({ email: email.toLowerCase() });
+    const existingUser = await User.findOne({
+      email: email.toLowerCase().trim(),
+    });
+
     if (existingUser) {
       return res
         .status(400)
@@ -49,7 +53,7 @@ router.post("/signup", async (req, res) => {
 
     const token = generateToken(user._id);
 
-    res.status(201).json({
+    return res.status(201).json({
       token,
       user: {
         id: user._id,
@@ -58,8 +62,11 @@ router.post("/signup", async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("Signup error:", err);
-    res.status(500).json({ error: "Server error. Please try again." });
+    console.error("Signup error full:", err);
+    return res.status(500).json({
+      error: "Server error. Please try again.",
+      details: err.message,
+    });
   }
 });
 
@@ -69,22 +76,32 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: "Email and password are required." });
+      return res.status(400).json({
+        error: "Email and password are required.",
+      });
     }
 
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const user = await User.findOne({
+      email: email.toLowerCase().trim(),
+    });
+
     if (!user) {
-      return res.status(400).json({ error: "Invalid email or password." });
+      return res.status(400).json({
+        error: "Invalid email or password.",
+      });
     }
 
     const hashedPassword = hashPassword(password);
+
     if (user.password !== hashedPassword) {
-      return res.status(400).json({ error: "Invalid email or password." });
+      return res.status(400).json({
+        error: "Invalid email or password.",
+      });
     }
 
     const token = generateToken(user._id);
 
-    res.json({
+    return res.json({
       token,
       user: {
         id: user._id,
@@ -93,26 +110,34 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (err) {
-    console.error("Login error:", err);
-    res.status(500).json({ error: "Server error. Please try again." });
+    console.error("Login error full:", err);
+    return res.status(500).json({
+      error: "Server error. Please try again.",
+      details: err.message,
+    });
   }
 });
 
-// GET /api/auth/me — get current user from token
+// GET /api/auth/me
 router.get("/me", auth, async (req, res) => {
   try {
     const user = await User.findById(req.userId).select("-password");
+
     if (!user) {
       return res.status(404).json({ error: "User not found." });
     }
-    res.json({
+
+    return res.json({
       id: user._id,
       name: user.name,
       email: user.email,
     });
   } catch (err) {
     console.error("Get user error:", err);
-    res.status(500).json({ error: "Server error." });
+    return res.status(500).json({
+      error: "Server error.",
+      details: err.message,
+    });
   }
 });
 
